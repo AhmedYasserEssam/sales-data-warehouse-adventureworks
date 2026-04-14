@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <Solution>
   <Configurations>
     <BuildType Name="Development" />
@@ -8,3 +9,15 @@
     <Deploy />
   </Project>
 </Solution>
+=======
+<Solution>
+  <Configurations>
+    <BuildType Name="Development" />
+    <Platform Name="Default" />
+  </Configurations>
+  <Project Path="AdventureWorks2008Cube/AdventureWorks2008Cube.dwproj" Type="d2abab84-bf74-430a-b69e-9dc6d40dda17">
+    <Platform Project="?" />
+    <Deploy />
+  </Project>
+</Solution>
+>>>>>>> 8f663aa3ef81b050240f8890b9cbb341a2fdb588

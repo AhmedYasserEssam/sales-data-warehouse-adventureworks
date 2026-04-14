@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- 1) Total sales measures by order year
 SELECT
 {
@@ -186,4 +187,194 @@ SELECT
     [Measures].[Net Sales Amount],
     [Measures].[Margin Amount]
 } ON ROWS
+=======
+-- 1) Total sales measures by order year
+SELECT
+{
+    [Measures].[Gross Sales Amount],
+    [Measures].[Discount Amount],
+    [Measures].[Net Sales Amount],
+    [Measures].[Margin Amount]
+} ON COLUMNS,
+NON EMPTY
+[Order Date].[Year Num].[Year Num].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 2) Net sales by order quarter
+SELECT
+{ [Measures].[Net Sales Amount] } ON COLUMNS,
+NON EMPTY
+[Order Date].[Year Quarter Name].[Year Quarter Name].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 3) Net sales by order month
+SELECT
+{ [Measures].[Net Sales Amount] } ON COLUMNS,
+NON EMPTY
+[Order Date].[Year Month Name].[Year Month Name].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 4) Sales by product category and year
+SELECT
+[Order Date].[Year Num].[Year Num].Members ON COLUMNS,
+NON EMPTY
+[DIM PRODUCT].[Category Name].[Category Name].Members ON ROWS
+FROM [AdventureWorksDW_View]
+WHERE ([Measures].[Net Sales Amount]);
+-- 5) Top 10 products by margin
+SELECT
+{ [Measures].[Margin Amount] } ON COLUMNS,
+TOPCOUNT(
+    NONEMPTY(
+        [DIM PRODUCT].[Product Name].[Product Name].Members,
+        [Measures].[Margin Amount]
+    ),
+    10,
+    [Measures].[Margin Amount]
+) ON ROWS
+FROM [AdventureWorksDW_View];
+-- 6) Top 10 products by net sales
+SELECT
+{ [Measures].[Net Sales Amount] } ON COLUMNS,
+TOPCOUNT(
+    NONEMPTY(
+        [DIM PRODUCT].[Product Name].[Product Name].Members,
+        [Measures].[Net Sales Amount]
+    ),
+    10,
+    [Measures].[Net Sales Amount]
+) ON ROWS
+FROM [AdventureWorksDW_View];
+-- 7) Sales by subcategory
+SELECT
+{
+    [Measures].[Order Quantity],
+    [Measures].[Net Sales Amount],
+    [Measures].[Margin Amount]
+} ON COLUMNS,
+NON EMPTY
+[DIM PRODUCT].[Subcategory Name].[Subcategory Name].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 8) Sales by customer type
+SELECT
+{
+    [Measures].[Net Sales Amount],
+    [Measures].[Margin Amount]
+} ON COLUMNS,
+NON EMPTY
+[DIM CUSTOMER].[Customer Type].[Customer Type].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 9) Top customers by revenue
+SELECT
+{ [Measures].[Net Sales Amount] } ON COLUMNS,
+TOPCOUNT(
+    NONEMPTY(
+        [DIM CUSTOMER].[Customer Name].[Customer Name].Members,
+        [Measures].[Net Sales Amount]
+    ),
+    10,
+    [Measures].[Net Sales Amount]
+) ON ROWS
+FROM [AdventureWorksDW_View];
+-- 10) Sales by country
+SELECT
+{
+    [Measures].[Net Sales Amount],
+    [Measures].[Margin Amount]
+} ON COLUMNS,
+NON EMPTY
+[DIM TERRITORY].[Country Region Code].MEMBERS ON ROWS
+FROM [AdventureWorksDW_View];
+-- 11) Sales by region group
+SELECT
+{
+    [Measures].[Net Sales Amount],
+    [Measures].[Margin Amount]
+} ON COLUMNS,
+NON EMPTY
+[DIM TERRITORY].[Region Group].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 12) Promotion performance by promotion type
+SELECT
+{
+    [Measures].[Gross Sales Amount],
+    [Measures].[Discount Amount],
+    [Measures].[Net Sales Amount],
+    [Measures].[Margin Amount]
+} ON COLUMNS,
+NON EMPTY
+[DIM PROMOTION].[Promotion Type].[Promotion Type].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 13) Promotion performance by promotion category
+SELECT
+{
+    [Measures].[Gross Sales Amount],
+    [Measures].[Discount Amount],
+    [Measures].[Net Sales Amount],
+    [Measures].[Margin Amount]
+} ON COLUMNS,
+NON EMPTY
+[DIM PROMOTION].[Promotion Category].[Promotion Category].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 14) Promotion performance over time
+SELECT
+[Order Date].[Year Num].[Year Num].Members ON COLUMNS,
+NON EMPTY
+[DIM PROMOTION].[Promotion Type].[Promotion Type].Members ON ROWS
+FROM [AdventureWorksDW_View]
+WHERE ([Measures].[Net Sales Amount]);
+-- 15) Order quantity by promotion type
+SELECT
+{
+    [Measures].[Order Quantity],
+    [Measures].[Discount Amount]
+} ON COLUMNS,
+NON EMPTY
+[DIM PROMOTION].[Promotion Type].[Promotion Type].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 16) Net sales by weekday
+SELECT
+{ [Measures].[Net Sales Amount] } ON COLUMNS,
+NON EMPTY
+[Order Date].[Weekday Name].[Weekday Name].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 17) Fiscal year analysis
+SELECT
+{
+    [Measures].[Net Sales Amount],
+    [Measures].[Margin Amount]
+} ON COLUMNS,
+NON EMPTY
+[Order Date].[Fiscal Year].[Fiscal Year].Members ON ROWS
+FROM [AdventureWorksDW_View];
+-- 18) Top 5 territories by margin
+SELECT
+{ [Measures].[Margin Amount] } ON COLUMNS,
+TOPCOUNT(
+    NONEMPTY(
+        [DIM TERRITORY].[Territory Name].[Territory Name].Members,
+        [Measures].[Margin Amount]
+    ),
+    5,
+    [Measures].[Margin Amount]
+) ON ROWS
+FROM [AdventureWorksDW_View];
+-- 19) Top 5 promotion types by net sales
+SELECT
+{ [Measures].[Net Sales Amount] } ON COLUMNS,
+TOPCOUNT(
+    NONEMPTY(
+        [DIM PROMOTION].[Promotion Type].[Promotion Type].Members,
+        [Measures].[Net Sales Amount]
+    ),
+    5,
+    [Measures].[Net Sales Amount]
+) ON ROWS
+FROM [AdventureWorksDW_View];
+-- 20) Year comparison matrix
+SELECT
+[Order Date].[Year Num].[Year Num].Members ON COLUMNS,
+{
+    [Measures].[Gross Sales Amount],
+    [Measures].[Net Sales Amount],
+    [Measures].[Margin Amount]
+} ON ROWS
+>>>>>>> 8f663aa3ef81b050240f8890b9cbb341a2fdb588
 FROM [AdventureWorksDW_View];
