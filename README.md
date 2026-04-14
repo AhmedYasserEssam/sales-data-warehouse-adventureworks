@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # AdventureWorks Big Data Project
 
 ## Overview
